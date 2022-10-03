@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "/api";
 
 const register = async (userData) => {
-    const res = await axios.post(API_URL, userData);
+    const res = await axios.post(`${API_URL}/register`, userData);
 
     if (res.data) {
         localStorage.setItem("user", JSON.stringify(res.data));
@@ -34,18 +34,6 @@ const forgotPass = async (email) => {
     return res.data;
 };
 
-const verifyCode = async (data) => {
-    const res = await axios.post(API_URL + "/two-factor-auth", data);
-
-    return res.data;
-};
-
-const resendCode = async () => {
-    const res = await axios.get(API_URL + "/two-factor-auth/resend");
-
-    return res.data;
-};
-
 const resetPass = async (data) => {
     const res = await axios.post(API_URL + "/reset-password", data);
 
@@ -64,8 +52,6 @@ const authService = {
     login,
     forgotPass,
     resetPass,
-    verifyCode,
-    resendCode,
     changePass,
 };
 

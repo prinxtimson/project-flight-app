@@ -6,7 +6,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
     user: user ? user : null,
-    count: 0,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -16,9 +15,9 @@ const initialState = {
 // Register user
 export const register = createAsyncThunk(
     "auth/register",
-    async (user, thunkAPI) => {
+    async (data, thunkAPI) => {
         try {
-            return await authService.register(user);
+            return await authService.register(data);
         } catch (err) {
             const msg =
                 (err.response &&
@@ -32,9 +31,9 @@ export const register = createAsyncThunk(
     }
 );
 
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
     try {
-        return await authService.login(user);
+        return await authService.login(data);
     } catch (err) {
         const msg =
             (err.response && err.response.data && err.response.data.message) ||
@@ -50,42 +49,6 @@ export const forgotPass = createAsyncThunk(
     async (email, thunkAPI) => {
         try {
             return await authService.forgotPass(email);
-        } catch (err) {
-            const msg =
-                (err.response &&
-                    err.response.data &&
-                    err.response.data.message) ||
-                err.message ||
-                err.toString();
-
-            return thunkAPI.rejectWithValue(msg);
-        }
-    }
-);
-
-export const verifyCode = createAsyncThunk(
-    "auth/verify-code",
-    async (data, thunkAPI) => {
-        try {
-            await authService.verifyCode(data);
-        } catch (err) {
-            const msg =
-                (err.response &&
-                    err.response.data &&
-                    err.response.data.message) ||
-                err.message ||
-                err.toString();
-
-            return thunkAPI.rejectWithValue(msg);
-        }
-    }
-);
-
-export const resendCode = createAsyncThunk(
-    "auth/reset-code",
-    async (thunkAPI) => {
-        try {
-            return await authService.resendCode();
         } catch (err) {
             const msg =
                 (err.response &&
@@ -150,9 +113,6 @@ export const authSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = false;
             state.message = "";
-        },
-        updateCount: (state, action) => {
-            state.count = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -227,36 +187,9 @@ export const authSlice = createSlice({
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
-            })
-            .addCase(verifyCode.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(verifyCode.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.message = "Successful";
-            })
-            .addCase(verifyCode.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.message = action.payload;
-            })
-            .addCase(resendCode.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(resendCode.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.isSuccess = true;
-                state.count = 60;
-                state.message = action.payload;
-            })
-            .addCase(resendCode.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.message = action.payload;
             });
     },
 });
 
-export const { reset, updateCount } = authSlice.actions;
+export const { reset } = authSlice.actions;
 export default authSlice.reducer;

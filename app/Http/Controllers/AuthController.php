@@ -38,11 +38,9 @@ class AuthController extends Controller
             'password' => bcrypt($fields['password'])
         ]);
 
-        $nameArr = explode(' ', $fields['name']);
-
         $user->profile()->create([
-            'firstname' => $nameArr[0],
-            'lastname' => $nameArr[1],
+            'firstname' => $fields['firstname'],
+            'lastname' => $fields['lastname'],
             
         ]);
 

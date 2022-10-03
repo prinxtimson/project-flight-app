@@ -18,8 +18,10 @@ import Bookings from "./pages/Bookings";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import RescheduleBooking from "./pages/RescheduleBooking";
 import CancelBooking from "./pages/CancelBooking";
-// import ChangePassword from "./pages/Auth/ChangePassword";
-// import Profile from "./pages/Profile";
+import ChangePassword from "./pages/Auth/ChangePassword";
+import Profile from "./pages/Profile";
+import AuthRoute from "./utils/AuthRoute";
+import GuestRoute from "./utils/GuestRoute";
 
 const App = () => {
     return (
@@ -27,29 +29,84 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route
+                        path="/login"
+                        element={
+                            <GuestRoute>
+                                <Login />
+                            </GuestRoute>
+                        }
+                    />
+                    <Route
+                        path="/register"
+                        element={
+                            <GuestRoute>
+                                <Register />
+                            </GuestRoute>
+                        }
+                    />
                     <Route
                         path="/forgot-password"
                         element={<ForgotPassword />}
                     />
-
-                    {/* <Route
+                    <Route
+                        path="/profile"
+                        element={
+                            <AuthRoute>
+                                <Profile />
+                            </AuthRoute>
+                        }
+                    />
+                    <Route
                         path="/change-password"
-                        element={<ChangePassword />}
-                    />*/}
+                        element={
+                            <AuthRoute>
+                                <ChangePassword />
+                            </AuthRoute>
+                        }
+                    />
                     <Route
                         path="/password/reset/:token"
-                        element={<ResetPassword />}
+                        element={
+                            <GuestRoute>
+                                <ResetPassword />
+                            </GuestRoute>
+                        }
                     />
+
                     <Route path="bookings">
-                        <Route path="" element={<Bookings />} />
-                        <Route path="schedule" element={<ScheduleBooking />} />
+                        <Route
+                            path=""
+                            element={
+                                <AuthRoute>
+                                    <Bookings />
+                                </AuthRoute>
+                            }
+                        />
+                        <Route
+                            path="schedule"
+                            element={
+                                <AuthRoute>
+                                    <ScheduleBooking />
+                                </AuthRoute>
+                            }
+                        />
                         <Route
                             path="reschedule"
-                            element={<RescheduleBooking />}
+                            element={
+                                <AuthRoute>
+                                    <RescheduleBooking />
+                                </AuthRoute>
+                            }
                         />
-                        <Route path="cancel" element={<CancelBooking />} />
+                        <Route
+                            path="cancel"
+                            element={
+                                <AuthRoute>
+                                    <CancelBooking />
+                                </AuthRoute>
+                            }
+                        />
                     </Route>
                 </Routes>
             </BrowserRouter>

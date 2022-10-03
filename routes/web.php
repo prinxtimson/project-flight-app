@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [AuthController::class, 'forgotPass']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,18 +53,28 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-Route::prefix('bookings')->group(function () {
-    Route::get('/', function () {
+Route::middleware(['auth:sanctum', '2fa'])->group(function () {
+
+    Route::get('/change-password', function () {
         return view('welcome');
     });
-    Route::get('schedule', function () {
+
+    Route::get('/profile', function () {
         return view('welcome');
     });
-    Route::get('reschedule', function () {
-        return view('welcome');
-    });
-    Route::get('cancel', function () {
-        return view('welcome');
+
+    Route::prefix('bookings')->group(function () {
+        Route::get('/', function () {
+            return view('welcome');
+        });
+        Route::get('schedule', function () {
+            return view('welcome');
+        });
+        Route::get('reschedule', function () {
+            return view('welcome');
+        });
+        Route::get('cancel', function () {
+            return view('welcome');
+        });
     });
 });
-

@@ -10,7 +10,7 @@ import AppContainer from "../layouts/AppContainer";
 
 const ScheduleBooking = () => {
     const [data, setData] = useState({
-        role: "",
+        role_applied: "",
         other: "",
         date: "",
         time: "",
@@ -61,13 +61,13 @@ const ScheduleBooking = () => {
                         <div className="field tw-mb-6">
                             <span className="p-float-label">
                                 <Dropdown
-                                    name="role"
-                                    value={data.role}
+                                    name="role_applied"
+                                    value={data.role_applied}
                                     options={selectItems}
                                     onChange={handleOnChange}
                                     placeholder="Role applied for"
                                 />
-                                <label htmlFor="role" className="">
+                                <label htmlFor="role_applied" className="">
                                     Role *
                                 </label>
                             </span>

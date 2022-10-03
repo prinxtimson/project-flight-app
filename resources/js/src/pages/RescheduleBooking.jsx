@@ -11,7 +11,7 @@ import AppContainer from "../layouts/AppContainer";
 const RescheduleBooking = () => {
     const [data, setData] = useState({
         id: "",
-        role: "",
+        role_applied: "",
         other: "",
         date: "",
         time: "",
