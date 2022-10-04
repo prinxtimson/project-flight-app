@@ -90,7 +90,9 @@ const Header = () => {
                                                 </div>
                                                 <div className="tw-mx-2">
                                                     <Avatar
-                                                        image="/images/no_img.png"
+                                                        image={
+                                                            user?.user?.avatar
+                                                        }
                                                         shape="circle"
                                                         size="large"
                                                         onClick={(event) =>
@@ -136,7 +138,7 @@ const Header = () => {
                                         </div>
                                         <div className="tw-mx-4">
                                             <Avatar
-                                                image="/images/no_img.png"
+                                                image={user?.user?.avatar}
                                                 shape="circle"
                                                 size="large"
                                                 onClick={(event) =>

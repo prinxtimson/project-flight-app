@@ -104,6 +104,45 @@ export const changePass = createAsyncThunk(
     }
 );
 
+export const getCurrentUser = createAsyncThunk("auth/me", async (thunkAPI) => {
+    try {
+        return await authService.getCurrentUser();
+    } catch (err) {
+        if (err.response.status === 401) {
+            localStorage.removeItem("user");
+            thunkAPI.dispatch(clearUser());
+        }
+        const msg =
+            (err.response && err.response.data && err.response.data.message) ||
+            err.message ||
+            err.toString();
+
+        return thunkAPI.rejectWithValue(msg);
+    }
+});
+
+export const resendVerification = createAsyncThunk(
+    "auth/resend-verification",
+    async (thunkAPI) => {
+        try {
+            return await authService.resendVerification();
+        } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
+            const msg =
+                (err.response &&
+                    err.response.data &&
+                    err.response.data.message) ||
+                err.message ||
+                err.toString();
+
+            return thunkAPI.rejectWithValue(msg);
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
 });
@@ -145,10 +184,22 @@ export const authSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isSuccess = true;
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+                state.user = null;
+            })
+            .addCase(getCurrentUser.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getCurrentUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = { ...state.user, user: action.payload };
+            })
+            .addCase(getCurrentUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -176,6 +227,19 @@ export const authSlice = createSlice({
                 state.message = action.payload;
             })
             .addCase(forgotPass.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
+            })
+            .addCase(resendVerification.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(resendVerification.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isSuccess = true;
+                state.message = action.payload.message;
+            })
+            .addCase(resendVerification.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;

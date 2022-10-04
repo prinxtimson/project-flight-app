@@ -25,8 +25,14 @@ import GuestRoute from "./utils/GuestRoute";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Feedbacks from "./pages/Feedbacks";
+import VerifyEmail from "./pages/Auth/VerifyEmail";
+import { useEffect } from "react";
+import { getCurrentUser } from "./features/auth/authSlice";
 
 const App = () => {
+    useEffect(() => {
+        store.dispatch(getCurrentUser());
+    }, []);
     return (
         <Provider store={store}>
             <BrowserRouter>
@@ -35,6 +41,7 @@ const App = () => {
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/contact-us" element={<ContactUs />} />
                     <Route path="/feedbacks" element={<Feedbacks />} />
+                    <Route path="/email/verify" element={<VerifyEmail />} />
                     <Route
                         path="/login"
                         element={

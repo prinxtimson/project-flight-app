@@ -12,6 +12,16 @@ const register = async (userData) => {
     return res.data;
 };
 
+const getCurrentUser = async () => {
+    const res = await axios.get(`${API_URL}/me`);
+
+    if (res.data) {
+        localStorage.setItem("user", JSON.stringify(res.data));
+    }
+
+    return res.data;
+};
+
 const logout = async () => {
     await axios.post(API_URL + "/logout");
     localStorage.removeItem("user");
@@ -46,6 +56,11 @@ const changePass = async (data) => {
     return res.data;
 };
 
+const resendVerification = async () => {
+    const res = await axios.post(`${API_URL}/email/verification-notification`);
+    return res.data;
+};
+
 const authService = {
     register,
     logout,
@@ -53,6 +68,8 @@ const authService = {
     forgotPass,
     resetPass,
     changePass,
+    resendVerification,
+    getCurrentUser,
 };
 
 export default authService;

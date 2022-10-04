@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPass']);
@@ -32,6 +38,10 @@ Route::get('help', function () {
 Route::get('contact-us', function () {
     return view('welcome');
 });
+
+Route::get('/email/verify', function () {
+    return view('welcome');
+})->middleware('auth:sanctum')->name('verification.notice');
 
 Route::middleware(['guest'])->group(function () {
     
@@ -53,7 +63,7 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/change-password', function () {
         return view('welcome');

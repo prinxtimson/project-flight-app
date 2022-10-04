@@ -84,11 +84,15 @@ class BookingController extends Controller
         $booking = Booking::withTrashed()->find($id);
 
         if(isset($booking) && isset($booking->delete_at)){
-            return 'Booking had been canceled successfuly';
+            return response([
+                'message' => 'Booking had been canceled successfuly'
+            ]);
         }        
         $booking->delete();
 
-        return 'Booking had been canceled successfuly';
+        return response([
+            'message' => 'Booking had been canceled successfuly'
+        ]);
     }
 
     /**
@@ -107,6 +111,8 @@ class BookingController extends Controller
 
         $booking->forceDelete();
 
-        return 'Booking had been deleted successfuly';
+        return response([
+            'message' => 'Booking had been deleted successfuly'
+        ]);
     }
 }

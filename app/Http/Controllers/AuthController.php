@@ -233,6 +233,15 @@ class AuthController extends Controller
         ]);
     }
 
+    public function resendVerification(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return response([
+            'message' => 'Verification link sent!'
+        ]);
+    }
+
     public function forgotPass(Request $request)
     {
         $request->validate(['email' => 'required|email']);
