@@ -121,7 +121,7 @@ const RescheduleBooking = () => {
                     </form>
                     <LinkButton
                         to="../"
-                        className="tw-block tw-text-indigo-700 tw-mt-4 tw-w-full"
+                        className="tw-block tw-text-indigo-700 tw-mt-4 tw-w-full "
                     >
                         Cancel
                     </LinkButton>
