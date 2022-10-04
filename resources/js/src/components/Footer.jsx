@@ -28,29 +28,32 @@ const Footer = () => {
                                 Contact Us
                             </Link>
                             <Link
-                                to="/feedback"
+                                to="/feedbacks"
                                 className="tw-underline tw-text-sm tw-text-blue-500 hover:tw-text-blue-800 "
                             >
                                 Provide Feedback
                             </Link>
-                            <Link
-                                to="/faq"
+                            <a
+                                href="https://mytritek.co.uk/success-stories/"
+                                target="_blank"
                                 className="tw-underline tw-text-sm tw-text-blue-500 hover:tw-text-blue-800 "
                             >
                                 FAQ & Testimonials
-                            </Link>
-                            <Link
-                                to="/faq"
+                            </a>
+                            <a
+                                href="https://mytritek.co.uk/terms-and-conditions/"
+                                target="_blank"
                                 className="tw-underline tw-text-sm tw-text-blue-500 hover:tw-text-blue-800 "
                             >
                                 Terms and Conditions
-                            </Link>
-                            <Link
-                                to="/faq"
+                            </a>
+                            <a
+                                href="https://mytritek.co.uk/privacy-policy/"
+                                target="_blank"
                                 className="tw-underline tw-text-sm tw-text-blue-500 hover:tw-text-blue-800 "
                             >
                                 Privacy Policy
-                            </Link>
+                            </a>
                         </div>
                     </div>
                 </div>

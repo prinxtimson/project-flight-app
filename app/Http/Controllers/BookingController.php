@@ -16,7 +16,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $bookings = Booking::withTrashed()->where('user_id', $user->id)->get();
+        $bookings = Booking::withTrashed()->where('user_id', $user->id)->orderBy('id', 'DESC')->get();
 
         return $bookings;
     }

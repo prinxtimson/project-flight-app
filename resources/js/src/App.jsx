@@ -22,6 +22,9 @@ import ChangePassword from "./pages/Auth/ChangePassword";
 import Profile from "./pages/Profile";
 import AuthRoute from "./utils/AuthRoute";
 import GuestRoute from "./utils/GuestRoute";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import Feedbacks from "./pages/Feedbacks";
 
 const App = () => {
     return (
@@ -29,6 +32,9 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/about-us" element={<AboutUs />} />
+                    <Route path="/contact-us" element={<ContactUs />} />
+                    <Route path="/feedbacks" element={<Feedbacks />} />
                     <Route
                         path="/login"
                         element={
@@ -47,7 +53,11 @@ const App = () => {
                     />
                     <Route
                         path="/forgot-password"
-                        element={<ForgotPassword />}
+                        element={
+                            <GuestRoute>
+                                <ForgotPassword />
+                            </GuestRoute>
+                        }
                     />
                     <Route
                         path="/profile"

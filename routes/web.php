@@ -19,7 +19,7 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPass']);
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('about-us', function () {
     return view('welcome');
@@ -53,7 +53,7 @@ Route::middleware(['guest'])->group(function () {
 
 });
 
-Route::middleware(['auth:sanctum', '2fa'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/change-password', function () {
         return view('welcome');

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api";
+const API_URL = "/api/bookings";
 
 const getBookings = async () => {
     const res = await axios.get(API_URL);
@@ -27,13 +27,13 @@ const scheduleBooking = async (data) => {
 };
 
 const rescheduleBooking = async (formData) => {
-    const res = await axios.post(API_URL + "/" + formData.id, formData.data);
+    const res = await axios.put(API_URL + "/" + formData.id, formData);
 
     return res.data;
 };
 
 const cancelBooking = async (formData) => {
-    const res = await axios.delete(API_URL + "/" + formData.id, formData.data);
+    const res = await axios.post(`${API_URL}/${formData.id}/cancel`, formData);
 
     return res.data;
 };

@@ -8,7 +8,7 @@ const GuestRoute = ({ children }) => {
     const redirectPath = location.state?.path || "/";
 
     if (!isLoading && user) {
-        <Navigate to={redirectPath} />;
+        return <Navigate to={redirectPath} />;
     }
 
     return children;

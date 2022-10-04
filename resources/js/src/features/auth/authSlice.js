@@ -88,6 +88,10 @@ export const changePass = createAsyncThunk(
         try {
             return await authService.changePass(data);
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&
@@ -114,6 +118,9 @@ export const authSlice = createSlice({
             state.isSuccess = false;
             state.message = "";
         },
+        clearUser: (state) => {
+            state.user = null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -128,7 +135,6 @@ export const authSlice = createSlice({
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
-                state.message = action.payload;
                 state.user = null;
             })
             .addCase(logout.fulfilled, (state) => {
@@ -140,7 +146,6 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.count = 60;
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
@@ -155,7 +160,7 @@ export const authSlice = createSlice({
             .addCase(changePass.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.message = action.payload;
+                state.message = action.payload.message;
             })
             .addCase(changePass.rejected, (state, action) => {
                 state.isLoading = false;
@@ -191,5 +196,5 @@ export const authSlice = createSlice({
     },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, clearUser } = authSlice.actions;
 export default authSlice.reducer;

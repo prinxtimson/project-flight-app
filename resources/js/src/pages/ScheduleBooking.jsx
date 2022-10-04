@@ -7,13 +7,18 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 
 import AppContainer from "../layouts/AppContainer";
+import {
+    scheduleBooking,
+    clear,
+    reset,
+} from "../features/booking/bookingSlice";
 
 const ScheduleBooking = () => {
     const [data, setData] = useState({
         role_applied: "",
         other: "",
         date: "",
-        time: "",
+        time: "14:30",
         mentor: "",
     });
 
@@ -30,15 +35,20 @@ const ScheduleBooking = () => {
 
         if (isSuccess) {
             toast.success(message);
-            // setData({
-
-            // });
+            setData({
+                role_applied: "",
+                other: "",
+                date: "",
+                time: "",
+                mentor: "",
+            });
         }
 
-        //dispatch(reset());
+        dispatch(reset());
     }, [isError, isSuccess, message, dispatch]);
 
-    const selectItems = ["Project Manager", "Business Analyst", "Orthers"];
+    const selectItems = ["Project Manager", "Business Analyst", "Others"];
+    const mentorList = ["Mohammed", "James", "Ayodele"];
 
     const handleOnChange = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
@@ -46,11 +56,16 @@ const ScheduleBooking = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        const formData = {
+            ...data,
+            role_applied: data.other ? data.other : data.role_applied,
+        };
+        dispatch(scheduleBooking(formData));
     };
 
     return (
         <AppContainer>
-            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white">
+            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-py-8">
                 <div className="tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8">
                     <div className="tw-text-center tw-mb-8">
                         <h2 className="tw-text-2xl tw-font-medium text-center tw-mb-2">
@@ -79,6 +94,7 @@ const ScheduleBooking = () => {
                                     type="text"
                                     value={data.other}
                                     onChange={handleOnChange}
+                                    disabled={data.role_applied !== "Others"}
                                 />
                                 <label htmlFor="other" className="">
                                     Others
@@ -90,7 +106,7 @@ const ScheduleBooking = () => {
                                 <Dropdown
                                     name="mentor"
                                     value={data.mentor}
-                                    options={selectItems}
+                                    options={mentorList}
                                     onChange={handleOnChange}
                                     placeholder="Select mentor"
                                 />
@@ -107,7 +123,7 @@ const ScheduleBooking = () => {
                                     onChange={(e) =>
                                         setData({
                                             ...data,
-                                            date: e.value,
+                                            date: e.value.toLocaleDateString(),
                                         })
                                     }
                                     showIcon

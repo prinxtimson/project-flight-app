@@ -4,7 +4,7 @@ import { Password } from "primereact/password";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
-import { resetPass, reset } from "../../features/auth/authSlice";
+import { changePass, reset } from "../../features/auth/authSlice";
 import AppContainer from "../../layouts/AppContainer";
 
 const ChangePassword = () => {
@@ -43,13 +43,13 @@ const ChangePassword = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        dispatch(resetPass(data));
+        dispatch(changePass(data));
     };
     return (
         <AppContainer>
             <div className="tw-grow tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-center">
-                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8">
-                    <div className="tw-text-center tw-mb-5">
+                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8 tw-border">
+                    <div className="tw-text-center tw-mb-8">
                         <div className=" tw-text-2xl tw-font-medium tw-mb-6">
                             Change Password
                         </div>

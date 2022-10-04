@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { clearUser } from "../auth/authSlice";
 import bookingService from "./bookingService";
 
 const initialState = {
@@ -15,6 +16,10 @@ export const getBookings = createAsyncThunk("booking/get", async (thunkAPI) => {
     try {
         return await bookingService.getBookings();
     } catch (err) {
+        if (err.response.status === 401) {
+            localStorage.removeItem("user");
+            thunkAPI.dispatch(clearUser());
+        }
         const msg =
             (err.response && err.response.data && err.response.data.message) ||
             err.message ||
@@ -30,6 +35,10 @@ export const getBookingsByPage = createAsyncThunk(
         try {
             return await bookingService.getBookingsByPage(page);
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&
@@ -48,6 +57,10 @@ export const getBooking = createAsyncThunk(
         try {
             return await bookingService.getBooking(id);
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&
@@ -64,8 +77,12 @@ export const scheduleBooking = createAsyncThunk(
     "booking/schedule",
     async (data, thunkAPI) => {
         try {
-            await bookingService.scheduleBookings(data);
+            await bookingService.scheduleBooking(data);
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&
@@ -84,6 +101,10 @@ export const rescheduleBooking = createAsyncThunk(
         try {
             return await bookingService.rescheduleBooking(data);
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&
@@ -104,6 +125,10 @@ export const cancelBooking = createAsyncThunk(
 
             return res;
         } catch (err) {
+            if (err.response.status === 401) {
+                localStorage.removeItem("user");
+                thunkAPI.dispatch(clearUser());
+            }
             const msg =
                 (err.response &&
                     err.response.data &&

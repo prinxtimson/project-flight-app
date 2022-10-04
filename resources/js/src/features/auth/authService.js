@@ -41,7 +41,7 @@ const resetPass = async (data) => {
 };
 
 const changePass = async (data) => {
-    const res = await axios.post(API_URL + "/change-password", data);
+    const res = await axios.put(API_URL + "/change-password", data);
 
     return res.data;
 };

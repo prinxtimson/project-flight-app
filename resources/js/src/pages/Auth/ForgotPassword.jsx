@@ -46,7 +46,7 @@ export default function ForgotPassword() {
     return (
         <AppContainer>
             <div className="tw-grow tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-center">
-                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8">
+                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8 tw-border">
                     <div className="form-demo">
                         <div className="flex justify-content-center tw-flex-col ">
                             <div className="tw-my-3"></div>

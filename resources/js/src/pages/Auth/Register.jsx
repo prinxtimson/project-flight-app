@@ -63,7 +63,7 @@ export default function Register() {
                 </h3>
             </div>
             <div className="tw-grow tw-p-4 tw-flex tw-flex-col tw-items-center tw-justify-center">
-                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8">
+                <div className="tw-card tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8 tw-border">
                     <div className="tw-text-center tw-mb-8">
                         <h2 className="tw-text-lg tw-font-medium text-center tw-mb-2">
                             Set up an Account

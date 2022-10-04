@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('bookings', [BookingController::class, 'index']);
     Route::get('bookings/{id}', [BookingController::class, 'show']);
-    Route::get('bookings/{id}/cancel', [BookingController::class, 'cancel']);
+    Route::post('bookings/{id}/cancel', [BookingController::class, 'cancel']);
     Route::post('bookings', [BookingController::class, 'store']);
     Route::put('bookings/{id}', [BookingController::class, 'update']);
     Route::delete('bookings/{id}', [BookingController::class, 'destroy']);

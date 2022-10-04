@@ -48,8 +48,6 @@ class AuthController extends Controller
 
         $token = auth()->user()->createToken('access_token')->plainTextToken;
 
-        auth()->user()->generate_code();
-
         $response = [
             'user' => auth()->user()->load(['profile']),
             // 'notifications' => [
@@ -79,8 +77,6 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
            $request->session()->regenerate();
-
-            auth()->user()->generate_code();
 
             $token = auth()->user()->createToken('access_token')->plainTextToken;
             // $notifications = auth()->user()->notifications;
@@ -215,11 +211,11 @@ class AuthController extends Controller
         $user = auth()->user();
 
         $fields = $request->validate([
-            'password' => 'required|string',
-            'new_password' => 'required|string|confirmed'
+            'current_password' => 'required|string',
+            'password' => 'required|string|confirmed'
         ]);
 
-        if(!Hash::check($fields['password'], $user->password)) {
+        if(!Hash::check($fields['current_password'], $user->password)) {
             return response([
                 'message' => 'wrong password'
             ], 401);
@@ -229,7 +225,7 @@ class AuthController extends Controller
             $user->markEmailAsVerified();
         }
         $user->update([
-            'password' => bcrypt($fields['new_password']),
+            'password' => bcrypt($fields['password']),
         ]);
 
         return response([

@@ -2,14 +2,20 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Calendar } from "primereact/calendar";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 
 import AppContainer from "../layouts/AppContainer";
+import {
+    cancelBooking,
+    getBookings,
+    clear,
+    reset,
+} from "../features/booking/bookingSlice";
+import LinkButton from "../components/LinkButton";
 
 const CancelBooking = () => {
-    const [booking, setBooking] = useState({});
+    const [booking, setBooking] = useState(null);
     const [value, setValue] = useState("");
     const dispatch = useDispatch();
 
@@ -17,18 +23,39 @@ const CancelBooking = () => {
         (state) => state.booking
     );
 
-    const handleOnChange = (event) => {
-        setData({ ...data, [event.target.name]: event.target.value });
-    };
+    useEffect(() => {
+        dispatch(getBookings());
+
+        return () => dispatch(clear());
+    }, []);
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(message);
+        }
+
+        if (isSuccess) {
+            toast.success(message);
+            setValue("");
+            setBooking(null);
+        }
+
+        dispatch(reset());
+    }, [isError, isSuccess, message, dispatch]);
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if (!booking || !value) {
+            toast.error("complete required field(s)");
+            return;
+        }
+        dispatch(cancelBooking({ id: booking.id, reason: value }));
     };
 
     return (
         <AppContainer>
-            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white">
-                <div className="tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8">
+            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-py-8">
+                <div className="tw-bg-white tw-p-6 tw-shadow-md tw-rounded-md tw-w-full md:tw-w-[36.5rem] tw-py-8 tw-border">
                     <div className="tw-text-center tw-mb-8">
                         <h2 className="tw-text-2xl tw-font-medium text-center tw-mb-2">
                             Cancel Booking
@@ -42,7 +69,7 @@ const CancelBooking = () => {
                                     value={booking}
                                     optionLabel="booking_number"
                                     options={bookings}
-                                    onChange={handleOnChange}
+                                    onChange={(e) => setBooking(e.target.value)}
                                     placeholder="Select booking"
                                 />
                                 <label htmlFor="booking" className="">
@@ -71,6 +98,12 @@ const CancelBooking = () => {
                             label="Cancel Session"
                         />
                     </form>
+                    <LinkButton
+                        to="../"
+                        className="tw-block tw-text-indigo-700 tw-mt-4 tw-w-full"
+                    >
+                        Cancel
+                    </LinkButton>
                 </div>
             </div>
         </AppContainer>

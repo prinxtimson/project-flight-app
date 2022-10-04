@@ -35,6 +35,11 @@ const Header = () => {
             command: () => navigate("/bookings"),
         },
         {
+            label: "Book Session",
+            icon: "pi pi-fw pi-calendar-plus",
+            command: () => navigate("/bookings/schedule"),
+        },
+        {
             label: "Change Password",
             icon: "pi pi-fw pi-lock",
             command: () => navigate("/change-password"),
@@ -61,7 +66,7 @@ const Header = () => {
                                 <div className="tw-flex tw-space-x-8 sm:tw-my-px sm:tw-ml-10 tw-grow">
                                     <Link to="/">Home</Link>
                                     <Link to="/about-us">About Us</Link>
-                                    <Link to="/help">Help</Link>
+                                    <Link to="/contact-us">Help</Link>
                                 </div>
                                 <div className="tw-grow">
                                     <span className="p-input-icon-left">
@@ -123,7 +128,7 @@ const Header = () => {
                         </div>
 
                         {user && (
-                            <div className="tw-relative tw-flex tw-items-center tw-ml-auto">
+                            <div className="tw-relative tw-flex tw-items-center tw-ml-auto lg:tw-hidden">
                                 <div className="tw-flex tw-justify-between">
                                     <div className="tw-flex tw-items-center tw-ml-6 tw-pl-6">
                                         <div className="tw-mr-4">
@@ -212,7 +217,7 @@ const Header = () => {
                     <div className="tw-flex tw-flex-col tw-pt-2 tw-pb-3 tw-space-y-4">
                         <Link to="/">Home</Link>
                         <Link to="/about-us">About Us</Link>
-                        <Link to="/help">Help</Link>
+                        <Link to="/contact-us">Help</Link>
                     </div>
                     {user ? (
                         <div className="tw-pt-4 tw-pb-1 tw-border-t tw-border-gray-200">
@@ -226,9 +231,7 @@ const Header = () => {
                             </div>
 
                             <div className="tw-p-4 tw-space-y-6">
-                                <Link method="post" to="logout" as="button">
-                                    Log Out
-                                </Link>
+                                <button onClick={onLogout}>Log Out</button>
                             </div>
                         </div>
                     ) : (

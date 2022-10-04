@@ -4,14 +4,10 @@ import { Column } from "primereact/column";
 import { useSelector, useDispatch } from "react-redux";
 
 import AppContainer from "../layouts/AppContainer";
-import {
-    getBookings,
-    getBookingsByPage,
-    clear,
-} from "../features/booking/bookingSlice";
+import { getBookings, clear } from "../features/booking/bookingSlice";
+import LinkButton from "../components/LinkButton";
 
 const Bookings = () => {
-    const [first, setFirst] = useState(0);
     const dispatch = useDispatch();
 
     const { bookings, isLoading } = useSelector((state) => state.booking);
@@ -21,12 +17,6 @@ const Bookings = () => {
 
         return () => dispatch(clear());
     }, []);
-
-    useEffect(() => {
-        if (bookings) {
-            setFirst(bookings.current_page - 1);
-        }
-    }, [bookings]);
 
     const formatDate = (value) => {
         const d = new Date(value);
@@ -39,7 +29,7 @@ const Bookings = () => {
     };
 
     const dateBodyTemplate = (rowData) => {
-        return formatDate(rowData.created_at);
+        return formatDate(rowData.date);
     };
 
     const attendanceBodyTemplate = (rowData) => {
@@ -48,26 +38,36 @@ const Bookings = () => {
 
     return (
         <AppContainer>
-            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white">
-                <div className="tw-shadow-md tw-rounded-md tw-p-4 tw-bg-white">
+            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-py-8">
+                <div className="tw-shadow-md tw-rounded-md tw-p-4 tw-bg-white tw-border">
+                    <div className="tw-flex tw-space-x-8 tw-my-4">
+                        <LinkButton
+                            to="./reschedule"
+                            className="tw-bg-indigo-700 tw-text-white"
+                        >
+                            Reschedule Bookings
+                        </LinkButton>
+                        <LinkButton
+                            to="./cancel"
+                            className="tw-bg-indigo-700 tw-text-white"
+                        >
+                            Cancel Bookings
+                        </LinkButton>
+                    </div>
                     <DataTable
-                        value={bookings?.data}
+                        value={bookings}
                         className="p-datatable-staffs"
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         dataKey="id"
                         rowHover
                         emptyMessage="No booking found."
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                         loading={isLoading}
                         responsiveLayout="scroll"
                         paginator
                         rows={20}
-                        first={first}
-                        onPage={(e) => dispatch(getBookingsByPage(e.first + 1))}
                     >
                         <Column
-                            field="id"
-                            header="ID"
+                            field="booking_number"
+                            header="Booking ID"
                             style={{ minWidth: "6rem" }}
                         />
                         <Column
