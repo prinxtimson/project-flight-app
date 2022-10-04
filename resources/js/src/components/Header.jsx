@@ -156,7 +156,7 @@ const Header = () => {
                             </div>
                         )}
 
-                        <div className="tw-mr-2 flex tw-items-center lg:tw-hidden">
+                        <div className="tw-mr-2 tw-flex tw-items-center lg:tw-hidden">
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
