@@ -4,10 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
-import { Checkbox } from "primereact/checkbox";
 import { toast } from "react-toastify";
 
-import { login, reset } from "../../features/auth/authSlice";
+import { register, reset } from "../../features/auth/authSlice";
 import AppContainer from "../../layouts/AppContainer";
 
 export default function Register() {
@@ -26,19 +25,16 @@ export default function Register() {
     );
 
     useEffect(() => {
-        return () => {
-            reset("password", "password_confirmation");
-        };
-    }, []);
+        if (isError) {
+            toast.error(message);
+        }
 
-    const onHandleChange = (event) => {
-        setData(
-            event.target.name,
-            event.target.type === "checkbox"
-                ? event.target.checked
-                : event.target.value
-        );
-    };
+        if (isSuccess) {
+            dispatch(reset());
+        }
+
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
 
     const handleOnChange = (event) => {
         setData({ ...data, [event.target.name]: event.target.value });
@@ -46,6 +42,7 @@ export default function Register() {
 
     const submit = (e) => {
         e.preventDefault();
+        dispatch(register(data));
     };
 
     return (
@@ -55,7 +52,7 @@ export default function Register() {
                     Already have an account, click here{" "}
                     <Link
                         to="/login"
-                        className="tw-underline  tw-text-blue-500 hover:tw-text-blue-800 "
+                        className="tw-underline tw-text-blue-500 hover:tw-text-blue-800"
                     >
                         Login
                     </Link>{" "}
