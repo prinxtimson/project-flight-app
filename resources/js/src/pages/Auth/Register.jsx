@@ -29,10 +29,6 @@ export default function Register() {
             toast.error(message);
         }
 
-        if (isSuccess) {
-            dispatch(reset());
-        }
-
         dispatch(reset());
     }, [user, isError, isSuccess, message, navigate, dispatch]);
 

@@ -46,10 +46,10 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        $token = auth()->user()->createToken('access_token')->plainTextToken;
+        $token = $user->createToken('access_token')->plainTextToken;
 
         $response = [
-            'user' => auth()->user()->load(['profile']),
+            'user' => $user->load(['profile']),
             // 'notifications' => [
             //     'data' => $notifications,
             //     'count' => $count
