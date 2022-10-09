@@ -90,9 +90,7 @@ const Header = () => {
                                                 </div>
                                                 <div className="tw-mx-2">
                                                     <Avatar
-                                                        image={
-                                                            user?.user?.avatar
-                                                        }
+                                                        image={user?.avatar}
                                                         shape="circle"
                                                         size="large"
                                                         onClick={(event) =>
@@ -100,6 +98,7 @@ const Header = () => {
                                                                 event
                                                             )
                                                         }
+                                                        imageAlt={user?.name}
                                                     />
                                                     <Menu
                                                         model={items}
@@ -138,12 +137,13 @@ const Header = () => {
                                         </div>
                                         <div className="tw-mx-4">
                                             <Avatar
-                                                image={user?.user?.avatar}
+                                                image={user?.avatar}
                                                 shape="circle"
                                                 size="large"
                                                 onClick={(event) =>
                                                     menu.current.toggle(event)
                                                 }
+                                                imageAlt={user?.name}
                                             />
                                             <Menu
                                                 model={items}

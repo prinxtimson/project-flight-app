@@ -35,6 +35,10 @@ Route::get('help', function () {
     return view('welcome');
 });
 
+Route::get('feedbacks', function () {
+    return view('welcome');
+});
+
 Route::get('contact-us', function () {
     return view('welcome');
 });

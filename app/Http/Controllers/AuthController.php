@@ -173,14 +173,11 @@ class AuthController extends Controller
         $fields = $request->validate([
             'firstname' => 'required|string',
             'lastname' => 'required|string',
-            'username' => 'string',
+            'phone' => 'string',
         ]);
-
-        $username = $request->only('username') ?? $user->username;
 
         $user->update([
             'name' =>  $fields['firstname'] . ' ' . $fields['lastname'],
-            'username' => strtolower($username),
         ]);
 
         $user->profile()->update($request->except(['avatar', '_method', 'email', 'username' ]));

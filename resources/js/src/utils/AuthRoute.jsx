@@ -9,7 +9,7 @@ const AuthRoute = ({ children }) => {
         return <Navigate to="/login" state={{ path: location.pathname }} />;
     }
 
-    if (!user?.user?.email_verified_at) {
+    if (!user?.email_verified_at) {
         return <Navigate to="/email/verify" />;
     }
 

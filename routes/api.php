@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\FeedbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,14 @@ Route::post('/login', [AuthController::class, 'api_login']);
 Route::post('/forgot-password', [AuthController::class, 'apiForgotPass']);
 Route::post('/reset-password', [AuthController::class, 'resetPass']);
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::get('feedbacks', [FeedbackController::class, 'index']);
+Route::get('feedbacks/{id}', [FeedbackController::class, 'show']);
+Route::post('feedbacks', [FeedbackController::class, 'store']);
+
+Route::get('contact', [ContactUsController::class, 'index']);
+Route::get('contact/{id}', [ContactUsController::class, 'show']);
+Route::post('contact', [ContactUsController::class, 'store']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('me', [AuthController::class, 'me']);

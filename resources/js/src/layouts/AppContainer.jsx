@@ -7,7 +7,7 @@ const AppContainer = ({ children }) => {
         <div className="tw-flex tw-flex-col tw-grow">
             <Header />
             <div className="tw-grow tw-flex tw-flex-col">{children}</div>
-            {/* <CookieConsent /> */}
+            <CookieConsent />
             <Footer />
         </div>
     );

@@ -6,7 +6,7 @@ const register = async (userData) => {
     const res = await axios.post(`${API_URL}/register`, userData);
 
     if (res.data) {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
     }
 
     return res.data;
@@ -32,7 +32,7 @@ const login = async (userData) => {
     const res = await axios.post("/login", userData);
 
     if (res.data) {
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data.user));
     }
 
     return res.data;
@@ -56,6 +56,12 @@ const changePass = async (data) => {
     return res.data;
 };
 
+const updateUser = async (data) => {
+    const res = await axios.put(API_URL + "/update", data);
+
+    return res.data;
+};
+
 const resendVerification = async () => {
     const res = await axios.post(`${API_URL}/email/verification-notification`);
     return res.data;
@@ -65,6 +71,7 @@ const authService = {
     register,
     logout,
     login,
+    updateUser,
     forgotPass,
     resetPass,
     changePass,
