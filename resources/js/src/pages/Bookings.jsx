@@ -33,7 +33,16 @@ const Bookings = () => {
     };
 
     const attendanceBodyTemplate = (rowData) => {
-        return "attendance";
+        if (rowData.status == "attended") {
+            return <i className="pi pi-check-circle"></i>;
+        } else if (rowData.status == "missed") {
+            return (
+                <i
+                    className="pi pi-minus-circle p-danger"
+                    style={{ fontColor: "red" }}
+                ></i>
+            );
+        }
     };
 
     return (
@@ -74,22 +83,25 @@ const Bookings = () => {
                             field="date"
                             header="Date"
                             sortable
+                            align="center"
                             style={{ minWidth: "10rem" }}
                             body={dateBodyTemplate}
                         />
-                        <Column
+                        {/* <Column
                             field="time"
                             header="Time"
                             style={{ minWidth: "10rem" }}
-                        />
+                        /> */}
                         <Column
                             field="mentor"
                             header="Mentor"
+                            align="center"
                             style={{ minWidth: "14rem" }}
                         />
                         <Column
                             header="Attendance"
                             style={{ minWidth: "10rem" }}
+                            align="center"
                             body={attendanceBodyTemplate}
                         />
                     </DataTable>
