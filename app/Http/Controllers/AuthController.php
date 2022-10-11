@@ -25,7 +25,7 @@ class AuthController extends Controller
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed|min:8|regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/'
         ]);
 
         $hash = md5(strtolower(trim($fields['email'])));
@@ -209,7 +209,7 @@ class AuthController extends Controller
 
         $fields = $request->validate([
             'current_password' => 'required|string',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string|confirmed|min:8|regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/'
         ]);
 
         if(!Hash::check($fields['current_password'], $user->password)) {
@@ -271,7 +271,7 @@ class AuthController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8|confirmed|regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/',
         ]);
     
         $status = Password::reset(

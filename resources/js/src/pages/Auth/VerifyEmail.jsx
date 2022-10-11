@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "primereact/button";
 import { toast } from "react-toastify";
@@ -11,14 +12,14 @@ import AppContainer from "../../layouts/AppContainer";
 
 export default function VerifyEmail() {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const { isLoading, isSuccess, isError, message } = useSelector(
         (state) => state.auth
     );
 
     const onLogout = () => {
         dispatch(logout());
-        dispatch(reset());
+        navigate("/login");
     };
 
     const submit = (e) => {

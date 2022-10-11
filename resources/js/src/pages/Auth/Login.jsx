@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { Checkbox } from "primereact/checkbox";
+import { Captcha } from "primereact/captcha";
 import { toast } from "react-toastify";
 
 import { login, reset } from "../../features/auth/authSlice";
@@ -137,7 +138,9 @@ export default function Login() {
                                                 Forgot your password?
                                             </Link>
                                         </div>
-
+                                        <div className="tw-mb-8">
+                                            <Captcha siteKey="6Le5UWwiAAAAAOqjfyFOAtKk8mdx3Q8ay4S1kZuG" />
+                                        </div>
                                         <Button
                                             id="custom"
                                             type="submit"

@@ -18,7 +18,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
  
     return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+})->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPass']);

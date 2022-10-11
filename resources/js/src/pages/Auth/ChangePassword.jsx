@@ -8,6 +8,7 @@ import { changePass, reset } from "../../features/auth/authSlice";
 import AppContainer from "../../layouts/AppContainer";
 
 const ChangePassword = () => {
+    const passwordValidation = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     const [data, setData] = useState({
         current_password: "",
         password: "",
@@ -77,28 +78,50 @@ const ChangePassword = () => {
                             <span className="p-float-label ">
                                 <Password
                                     name="password"
-                                    className="tw-w-full "
                                     toggleMask
                                     value={data.password}
                                     onChange={handleOnChange}
-                                    autoComplete="off"
+                                    feedback={false}
+                                    className={
+                                        data.password &&
+                                        !passwordValidation.test(data.password)
+                                            ? "p-invalid"
+                                            : ""
+                                    }
                                     required
                                 />
                                 <label htmlFor="password" className="">
                                     New Password *
                                 </label>
                             </span>
+                            {data.password &&
+                                !passwordValidation.test(data.password) && (
+                                    <small
+                                        id="password-help"
+                                        className="p-error block"
+                                    >
+                                        Must contain at least one of each sets
+                                        A-Z, a-z, 0-9 and minimum of 8
+                                        characters.
+                                    </small>
+                                )}
                         </div>
                         <div className="field tw-mb-6">
                             <span className="p-float-label">
                                 <Password
                                     name="password_confirmation"
                                     toggleMask
-                                    className="tw-w-full "
                                     value={data.password_confirmation}
                                     onChange={handleOnChange}
-                                    autoComplete="off"
                                     required
+                                    feedback={false}
+                                    className={
+                                        data.password_confirmation &&
+                                        data.password !==
+                                            data.password_confirmation
+                                            ? "p-invalid"
+                                            : ""
+                                    }
                                 />
                                 <label
                                     htmlFor="password_confirmation"
@@ -107,6 +130,16 @@ const ChangePassword = () => {
                                     Confirm Password *
                                 </label>
                             </span>
+                            {data.password_confirmation &&
+                                data.password !==
+                                    data.password_confirmation && (
+                                    <small
+                                        id="password-help"
+                                        className="p-error block"
+                                    >
+                                        Password do not match
+                                    </small>
+                                )}
                         </div>
 
                         <Button

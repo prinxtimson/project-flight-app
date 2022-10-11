@@ -4,12 +4,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
+import { Captcha } from "primereact/captcha";
 import { toast } from "react-toastify";
 
 import { register, reset } from "../../features/auth/authSlice";
 import AppContainer from "../../layouts/AppContainer";
 
 export default function Register() {
+    const passwordValidation = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     const [data, setData] = useState({
         firstname: "",
         lastname: "",
@@ -116,12 +118,30 @@ export default function Register() {
                                     value={data.password}
                                     onChange={handleOnChange}
                                     required
+                                    feedback={false}
+                                    className={
+                                        data.password &&
+                                        !passwordValidation.test(data.password)
+                                            ? "p-invalid"
+                                            : ""
+                                    }
                                 />
 
                                 <label htmlFor="password" className="">
                                     Password *
                                 </label>
                             </span>
+                            {data.password &&
+                                !passwordValidation.test(data.password) && (
+                                    <small
+                                        id="password-help"
+                                        className="p-error block"
+                                    >
+                                        Must contain at least one of each sets
+                                        A-Z, a-z, 0-9 and minimum of 8
+                                        characters.
+                                    </small>
+                                )}
                         </div>
                         <div className="field tw-mb-8">
                             <span className="p-float-label custom-label">
@@ -131,12 +151,33 @@ export default function Register() {
                                     value={data.password_confirmation}
                                     onChange={handleOnChange}
                                     required
+                                    feedback={false}
+                                    className={
+                                        data.password_confirmation &&
+                                        data.password !==
+                                            data.password_confirmation
+                                            ? "p-invalid"
+                                            : ""
+                                    }
                                 />
 
                                 <label htmlFor="password" className="">
                                     Confirm Password *
                                 </label>
                             </span>
+                            {data.password_confirmation &&
+                                data.password !==
+                                    data.password_confirmation && (
+                                    <small
+                                        id="password-help"
+                                        className="p-error block"
+                                    >
+                                        Password do not match
+                                    </small>
+                                )}
+                        </div>
+                        <div className="tw-mb-8">
+                            <Captcha siteKey="6Le5UWwiAAAAAOqjfyFOAtKk8mdx3Q8ay4S1kZuG" />
                         </div>
                         <Button
                             type="submit"
