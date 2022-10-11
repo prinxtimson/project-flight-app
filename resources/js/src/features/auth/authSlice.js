@@ -186,7 +186,6 @@ export const authSlice = createSlice({
             })
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isSuccess = true;
                 state.user = action.payload.user;
             })
             .addCase(register.rejected, (state, action) => {
@@ -201,6 +200,7 @@ export const authSlice = createSlice({
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+                state.message = "Profile update successful";
                 state.user = action.payload;
             })
             .addCase(updateUser.rejected, (state, action) => {

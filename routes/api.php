@@ -31,12 +31,13 @@ Route::get('contact', [ContactUsController::class, 'index']);
 Route::get('contact/{id}', [ContactUsController::class, 'show']);
 Route::post('contact', [ContactUsController::class, 'store']);
 
+Route::post('/email/verification-notification', [AuthController::class, 'resendVerification'])->middleware(['auth']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('me', [AuthController::class, 'me']);
     Route::put('/change-password', [AuthController::class, 'changePass']);
     Route::put('/update', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/email/verification-notification', [AuthController::class, 'resendVerification']);
     Route::delete('delete', [AuthController::class, 'delete']);
 
     Route::get('bookings', [BookingController::class, 'index']);
