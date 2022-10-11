@@ -18,7 +18,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
  
     return redirect('/');
-})->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPass']);
@@ -45,7 +45,7 @@ Route::get('contact-us', function () {
 
 Route::get('/email/verify', function () {
     return view('welcome');
-})->middleware('auth:sanctum')->name('verification.notice');
+})->middleware('auth')->name('verification.notice');
 
 Route::middleware(['guest'])->group(function () {
     
