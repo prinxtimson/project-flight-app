@@ -35,11 +35,11 @@ class BookingController extends Controller
             'role_applied' => 'required|string',
             'mentor' => 'string',
             'date' => 'required|date|date_format:m/d/Y',
-            'time' => 'required|string',
 
         ]);
 
         $fields['booking_number'] = 'BKG' . time();
+        $fields['time'] = '14:30';
 
         $booking = $user->bookings()->create($fields);
 
