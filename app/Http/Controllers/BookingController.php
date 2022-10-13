@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingEligibility;
+use App\Mail\NewBooking;
+use App\Mail\NotEligible;
 use App\Models\Booking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
+
+    public function all()
+    {
+        
+        $bookings = Booking::withTrashed()->orderBy('id', 'DESC')->get();
+
+        return $bookings;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,6 +55,8 @@ class BookingController extends Controller
 
         $booking = $user->bookings()->create($fields);
 
+        Mail::to('developertritek@gmail.com')->send(new NewBooking($user, $booking));
+
         return $booking;
     }
 
@@ -75,6 +89,42 @@ class BookingController extends Controller
 
         $booking->update($fields);
         $booking->restore();
+        
+        return $booking;
+    }
+
+    public function eligible($id)
+    {
+        $fields = [
+            'isEligible' => true,
+        ];
+
+        $booking = Booking::withTrashed()->find($id);
+
+        $user = $booking->user;
+
+        $booking->update($fields);
+        $booking->restore();
+
+        Mail::to($user)->send(new BookingEligibility($user, $booking));
+        
+        return $booking;
+    }
+
+    public function not_eligible($id)
+    {
+        $fields = [
+            'isEligible' => false,
+        ];
+
+        $booking = Booking::withTrashed()->find($id);
+        
+        $user = $booking->user;
+
+        $booking->update($fields);
+        $booking->restore();
+
+        Mail::to($user)->send(new NotEligible($user, $booking));
         
         return $booking;
     }

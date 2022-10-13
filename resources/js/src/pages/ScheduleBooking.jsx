@@ -39,7 +39,6 @@ const ScheduleBooking = () => {
                 role_applied: "",
                 other: "",
                 date: "",
-                time: "",
                 mentor: "",
             });
         }

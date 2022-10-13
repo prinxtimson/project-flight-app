@@ -41,8 +41,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('delete', [AuthController::class, 'delete']);
 
     Route::get('bookings', [BookingController::class, 'index']);
+    Route::get('bookings/all', [BookingController::class, 'all']);
     Route::get('bookings/{id}', [BookingController::class, 'show']);
     Route::post('bookings/{id}/cancel', [BookingController::class, 'cancel']);
+    Route::post('bookings/{id}/eligible', [BookingController::class, 'eligible']);
+    Route::post('bookings/{id}/ineligible', [BookingController::class, 'not_eligible']);
     Route::post('bookings', [BookingController::class, 'store']);
     Route::put('bookings/{id}', [BookingController::class, 'update']);
     Route::delete('bookings/{id}', [BookingController::class, 'destroy']);

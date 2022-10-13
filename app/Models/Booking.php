@@ -15,11 +15,13 @@ class Booking extends Model
         'role_applied',
         'mentor',
         'date',
-        'time'
+        'time',
+        'isEligible'
     ];
 
     protected $casts = [
         'date' => 'date',
+        'isEligible' => 'boolean'
     ];
 
     public function user ()

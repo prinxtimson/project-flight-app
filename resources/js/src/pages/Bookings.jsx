@@ -8,6 +8,7 @@ import { getBookings, clear } from "../features/booking/bookingSlice";
 import LinkButton from "../components/LinkButton";
 
 const Bookings = () => {
+    const [filterBookings, setFilterBookings] = useState([]);
     const dispatch = useDispatch();
 
     const { bookings, isLoading } = useSelector((state) => state.booking);
@@ -17,6 +18,12 @@ const Bookings = () => {
 
         return () => dispatch(clear());
     }, []);
+
+    useEffect(() => {
+        if (bookings) {
+            setFilterBookings(bookings);
+        }
+    }, [bookings]);
 
     const formatDate = (value) => {
         const d = new Date(value);
@@ -32,6 +39,14 @@ const Bookings = () => {
         return formatDate(rowData.date);
     };
 
+    const statusBodyTemplate = (rowData) => {
+        if (rowData.deleted_at) {
+            return "Canceled";
+        } else {
+            return "Active";
+        }
+    };
+
     const attendanceBodyTemplate = (rowData) => {
         if (rowData.status == "attended") {
             return <i className="pi pi-check-circle"></i>;
@@ -43,6 +58,32 @@ const Bookings = () => {
                 ></i>
             );
         }
+    };
+
+    const filterMissedBooking = () => {
+        const missedBooking = bookings
+            ? bookings.filter((val) => val.status == "missed")
+            : [];
+        setFilterBookings(missedBooking);
+    };
+
+    const filterAttendedBooking = () => {
+        const attendedBooking = bookings
+            ? bookings.filter((val) => val.status == "attended")
+            : [];
+        setFilterBookings(attendedBooking);
+    };
+
+    const filterNeither = () => {
+        const neitherBooking = bookings
+            ? bookings.filter((val) => val.status == null)
+            : [];
+        setFilterBookings(neitherBooking);
+    };
+
+    const allBooking = () => {
+        const all = bookings ? bookings : [];
+        setFilterBookings(all);
     };
 
     return (
@@ -64,7 +105,7 @@ const Bookings = () => {
                         </LinkButton>
                     </div>
                     <DataTable
-                        value={bookings}
+                        value={filterBookings}
                         className="p-datatable-staffs"
                         dataKey="id"
                         rowHover
@@ -87,11 +128,13 @@ const Bookings = () => {
                             style={{ minWidth: "10rem" }}
                             body={dateBodyTemplate}
                         />
-                        {/* <Column
-                            field="time"
-                            header="Time"
+                        <Column
+                            field="deleted_at"
+                            header="Status"
+                            align="center"
                             style={{ minWidth: "10rem" }}
-                        /> */}
+                            body={statusBodyTemplate}
+                        />
                         <Column
                             field="mentor"
                             header="Mentor"
@@ -106,9 +149,28 @@ const Bookings = () => {
                         />
                     </DataTable>
                     <div className="tw-flex tw-space-x-5 tw-mt-4">
-                        <button className="tw-text-blue-600">Attended</button>
-                        <button className="tw-text-blue-600">Missed</button>
-                        <button className="tw-text-blue-600">
+                        <button
+                            className="tw-text-blue-600"
+                            onClick={allBooking}
+                        >
+                            All
+                        </button>
+                        <button
+                            className="tw-text-blue-600"
+                            onClick={filterAttendedBooking}
+                        >
+                            Attended
+                        </button>
+                        <button
+                            className="tw-text-blue-600"
+                            onClick={filterMissedBooking}
+                        >
+                            Missed
+                        </button>
+                        <button
+                            className="tw-text-blue-600"
+                            onClick={filterNeither}
+                        >
                             Neither attended nor missed
                         </button>
                     </div>
