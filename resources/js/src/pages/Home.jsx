@@ -18,7 +18,7 @@ const Home = () => {
                     <h1 className="tw-mb-2 tw-font-semibold tw-text-2xl md:tw-text-4xl dark:tw-text-white">
                         1-on-1 Career Mentorship
                     </h1>
-                    <h2 className="tw-break-normal tw-font-medium tw-text-lg md:tw-text-2xl dark:tw-text-white">
+                    <h2 className="tw-break-normal tw-font-medium tw-text-lg md:tw-text-2xl dark:tw-text-white tw-mx-4">
                         Master your craft with leading mentors at your side.
                         Grow with every online mentoring session and take the
                         next step in your career. All on your terms, for a flat
