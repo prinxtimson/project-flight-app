@@ -24,7 +24,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <div id="root" class="tw-relative tw-flex tw-min-h-screen tw-bg-gray-100 dark:tw-bg-gray-900 dark:tw-text-white sm:tw-pt-0 tw-flex-col">
+        <div id="root" class="tw-relative tw-flex tw-min-h-screen tw-bg-gray-100 dark:tw-bg-gray-900 sm:tw-pt-0 tw-flex-col">
           
         </div>
     </body>
