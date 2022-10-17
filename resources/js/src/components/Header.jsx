@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu } from "primereact/menu";
 import { InputText } from "primereact/inputtext";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,14 +8,35 @@ import { Avatar } from "primereact/avatar";
 
 import ApplicationLogo from "./ApplicationLogo";
 import LinkButton from "./LinkButton";
+import searchData from "../utils/searchData";
 
 const Header = () => {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+    const [filteredSearch, setFilteredSearch] = useState([]);
+    const [searchShow, setSearchShow] = useState(false);
     const [searchText, setSearchText] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        let _filteredSearch = searchData.filter(
+            (data) =>
+                data.content.toLowerCase().includes(searchText.toLowerCase()) ||
+                data.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+
+        setFilteredSearch(_filteredSearch);
+
+        if (searchText === "") {
+            setSearchShow(false);
+        } else {
+            setSearchShow(true);
+        }
+
+        return () => setFilteredSearch([]);
+    }, [searchText]);
 
     const onLogout = () => {
         dispatch(logout());
@@ -69,17 +90,61 @@ const Header = () => {
                                     <Link to="/contact-us">Help</Link>
                                 </div>
                                 <div className="tw-grow">
-                                    <span className="p-input-icon-left">
-                                        <i className="pi pi-search" />
-                                        <InputText
-                                            value={searchText}
-                                            onChange={(e) =>
-                                                setSearchText(e.target.value)
-                                            }
-                                            placeholder="Search"
-                                            className="my-padding"
-                                        />
-                                    </span>
+                                    <div className="tw-relative">
+                                        <span className="p-input-icon-left tw-w-full p-input-icon-right">
+                                            <i className="pi pi-search" />
+                                            <InputText
+                                                value={searchText}
+                                                onChange={(e) =>
+                                                    setSearchText(
+                                                        e.target.value
+                                                    )
+                                                }
+                                                placeholder="Search"
+                                                className="my-padding tw-w-full"
+                                            />
+                                            <button
+                                                className=""
+                                                onClick={() =>
+                                                    setSearchText("")
+                                                }
+                                            >
+                                                <i className="pi pi-cancel" />
+                                            </button>
+                                        </span>
+                                        <div
+                                            className={` tw-absolute tw-shadow-md tw-border tw-w-full tw-h-96 tw-overflow-auto tw-bg-white ${
+                                                searchShow
+                                                    ? "tw-block"
+                                                    : "tw-hidden"
+                                            }`}
+                                        >
+                                            {filteredSearch.map((page) => (
+                                                <div
+                                                    className="tw-mt-2 tw-mx-2 tw-border-b"
+                                                    key={page.id}
+                                                >
+                                                    <Link
+                                                        to={page.link}
+                                                        className="tw-p-2 tw-rounded"
+                                                    >
+                                                        <h2 className="tw-text-lg tw-font-semibold">
+                                                            Page
+                                                        </h2>
+                                                        <div className="tw-flex tw-items-top">
+                                                            <h4 className="tw-text-lg tw-font-medium tw-shrink-0">
+                                                                {`${page.name} - `}
+                                                            </h4>
+
+                                                            <p className="tw-truncate tw-text-ellipsis tw-overflow-hidden">
+                                                                {` ${page.content}`}
+                                                            </p>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                                 {user ? (
                                     <div className="tw-relative tw-flex tw-items-center tw-ml-auto">
