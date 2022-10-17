@@ -271,15 +271,57 @@ const Header = () => {
                     }
                 >
                     <div className="tw-grow tw-my-4">
-                        <span className="p-input-icon-left tw-w-full">
-                            <i className="pi pi-search" />
-                            <InputText
-                                value={searchText}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                placeholder="Search"
-                                className="my-padding"
-                            />
-                        </span>
+                        <div className="tw-relative">
+                            <span className="p-input-icon-left tw-w-full">
+                                <i className="pi pi-search" />
+                                <InputText
+                                    value={searchText}
+                                    onChange={(e) =>
+                                        setSearchText(e.target.value)
+                                    }
+                                    placeholder="Search"
+                                    className="my-padding tw-w-full"
+                                />
+                                {/* <button
+                                                className=""
+                                                onClick={() =>
+                                                    setSearchText("")
+                                                }
+                                            >
+                                                <i className="pi pi-cancel" />
+                                            </button> */}
+                            </span>
+                            <div
+                                className={` tw-absolute tw-shadow-md tw-border tw-w-full tw-h-96 tw-overflow-auto tw-bg-white ${
+                                    searchShow ? "tw-block" : "tw-hidden"
+                                }`}
+                            >
+                                {filteredSearch.map((page) => (
+                                    <div
+                                        className="tw-mt-2 tw-mx-2 tw-border-b"
+                                        key={page.id}
+                                    >
+                                        <Link
+                                            to={page.link}
+                                            className="tw-p-2 tw-rounded"
+                                        >
+                                            <h2 className="tw-text-lg tw-font-semibold">
+                                                Page
+                                            </h2>
+                                            <div className="tw-flex tw-items-top">
+                                                <h4 className="tw-text-lg tw-font-medium tw-shrink-0">
+                                                    {`${page.name} - `}
+                                                </h4>
+
+                                                <p className="tw-truncate tw-text-ellipsis tw-overflow-hidden">
+                                                    {` ${page.content}`}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                     <div className="tw-flex tw-flex-col tw-pt-2 tw-pb-3 tw-space-y-4">
                         <Link to="/">Home</Link>
