@@ -91,7 +91,7 @@ const Header = () => {
                                 </div>
                                 <div className="tw-grow">
                                     <div className="tw-relative">
-                                        <span className="p-input-icon-left tw-w-full p-input-icon-right">
+                                        <span className="p-input-icon-left tw-w-full">
                                             <i className="pi pi-search" />
                                             <InputText
                                                 value={searchText}
@@ -103,14 +103,14 @@ const Header = () => {
                                                 placeholder="Search"
                                                 className="my-padding tw-w-full"
                                             />
-                                            <button
+                                            {/* <button
                                                 className=""
                                                 onClick={() =>
                                                     setSearchText("")
                                                 }
                                             >
                                                 <i className="pi pi-cancel" />
-                                            </button>
+                                            </button> */}
                                         </span>
                                         <div
                                             className={` tw-absolute tw-shadow-md tw-border tw-w-full tw-h-96 tw-overflow-auto tw-bg-white ${
