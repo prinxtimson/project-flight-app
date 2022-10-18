@@ -46,7 +46,7 @@ class BookingController extends Controller
         $fields = $request->validate([
             'role_applied' => 'required|string',
             'mentor' => 'string',
-            'date' => 'required|date|date_format:m/d/Y',
+            'date' => 'required|date',
 
         ]);
 
@@ -81,7 +81,7 @@ class BookingController extends Controller
     public function update(Request $request, $id)
     {
         $fields = $request->validate([
-            'date' => 'required|date|date_format:m/d/Y',
+            'date' => 'required|date',
             'time' => 'string',
         ]);
 

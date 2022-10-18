@@ -122,7 +122,7 @@ const ScheduleBooking = () => {
                                     onChange={(e) =>
                                         setData({
                                             ...data,
-                                            date: e.value.toLocaleDateString(),
+                                            date: e.value,
                                         })
                                     }
                                     showIcon

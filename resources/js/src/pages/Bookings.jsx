@@ -88,8 +88,11 @@ const Bookings = () => {
 
     return (
         <AppContainer>
-            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-py-8">
-                <div className="tw-shadow-md tw-rounded-md tw-p-4 tw-bg-white tw-border">
+            <div className="tw-grow tw-flex tw-flex-col tw-items-center tw-justify-center tw-bg-white tw-py-8 tw-px-4">
+                <div
+                    className="tw-shadow-md tw-rounded-md tw-p-4 tw-bg-white tw-border "
+                    style={{ maxWidth: "100%" }}
+                >
                     <div className="tw-flex tw-space-x-8 tw-my-4">
                         <LinkButton
                             to="./reschedule"
