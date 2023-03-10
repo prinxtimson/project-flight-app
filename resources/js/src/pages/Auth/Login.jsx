@@ -139,7 +139,7 @@ export default function Login() {
                                             </Link>
                                         </div>
                                         <div className="tw-mb-8">
-                                            <Captcha siteKey="6Le5UWwiAAAAAOqjfyFOAtKk8mdx3Q8ay4S1kZuG" />
+                                            {/* <Captcha siteKey="6Le5UWwiAAAAAOqjfyFOAtKk8mdx3Q8ay4S1kZuG" /> */}
                                         </div>
                                         <Button
                                             id="custom"
